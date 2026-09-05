@@ -39,29 +39,31 @@ This project implements a small Warehouse Management System focused on inventory
 
 Clone the repository, install the backend dependencies, configure the environment, and start the required PostgreSQL and Redis services.
 
-```bash
-git clone git@github.com:supravatm/Laravel-PostgreSQL-Redis-WMS-API.git wms    # Clone the WMS repository
-cp .env.example .env    # Create the environment configuration file
-docker compose config    # Validate the Docker Compose configuration
-docker compose up -d --build    # Build and start Docker containers
-docker compose up -d    # Start Docker containers in detached mode
-docker compose exec phpfpm bash    # Open a shell inside the PHP container
-# composer create-project laravel/laravel . --prefer-dist    # Create the Laravel application
-composer install    # Install project dependencies
-php artisan key:generate    # Generate the Laravel application encryption key
-php artisan migrate    # Run database migrations
-# composer require laravel/sanctum    # Install Laravel Sanctum authentication
-php artisan test --filter=ProductTest    # Run product-related tests
-php artisan test --filter=WarehouseLocationTest    # Run warehouse location tests
-php artisan test --filter=InventoryReadTest    # Run inventory read tests
-php artisan tinker    # Open the Laravel interactive console
-env('QUEUE_CONNECTION')    # Check the configured queue connection
-php artisan queue:work redis    # Start the Redis queue worker
-tail -f storage/logs/laravel.log    # Monitor Laravel application logs
-docker compose exec postgres psql -U wms -d wms    # Connect to the PostgreSQL database
-\dt    # List all PostgreSQL database tables
-docker compose down    # Stop and remove Docker containers
-```
+| Commands                                                                      | Description                                     |
+| ----------------------------------------------------------------------------- | ----------------------------------------------- |
+| `git clone git@github.com:supravatm/Laravel-PostgreSQL-Redis-WMS-API.git wms` | Clone the WMS repository                        |
+| `cp .env.example .env`                                                        | Create the environment configuration file       |
+| `docker compose config`                                                       | Validate the Docker Compose configuration       |
+| `docker compose up -d --build`                                                | Build and start Docker containers               |
+| `docker compose up -d`                                                        | Start Docker containers in detached mode        |
+| `docker compose exec phpfpm bash`                                             | Open a shell inside the PHP container           |
+| `# composer create-project laravel/laravel . --prefer-dist`                   | Create the Laravel application                  |
+| `composer install`                                                            | Install project dependencies                    |
+| `php artisan key:generate`                                                    | Generate the Laravel application encryption key |
+| `php artisan migrate`                                                         | Run database migrations                         |
+| `# composer require laravel/sanctum`                                          | Install Laravel Sanctum authentication          |
+| `php artisan test --filter=ProductTest`                                       | Run product-related tests                       |
+| `php artisan test --filter=WarehouseLocationTest`                             | Run warehouse location tests                    |
+| `php artisan test --filter=InventoryReadTest`                                 | Run inventory read tests                        |
+| `php artisan tinker`                                                          | Open the Laravel interactive console            |
+| `env('QUEUE_CONNECTION')`                                                     | Check the configured queue connection           |
+| `php artisan queue:work redis`                                                | Start the Redis queue worker                    |
+| `tail -f storage/logs/laravel.log`                                            | Monitor Laravel application logs                |
+| `docker compose exec postgres psql -U wms -d wms`                             | Connect to the PostgreSQL database              |
+| `\dt`                                                                         | List all PostgreSQL database tables             |
+| `php artisan serve`                                                           | Run Laravel locally                             |
+| `docker compose down`                                                         | Stop and remove Docker containers               |
+
 
 ## Usage
 
