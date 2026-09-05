@@ -1,0 +1,48 @@
+name: Build and test
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: wms_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          extensions: pdo_pgsql, pgsql
+
+      - name: Copy .env
+        run: cp src/.env.test src/.env
+
+      - name: Install app
+        working-directory: ./src
+        run: composer install
+
+      - name: Run migrations
+        working-directory: ./src
+        run: php artisan migrate
+
+      - name: Test PHPStan
+        working-directory: ./src
+        run: ./vendor/bin/phpstan analyse
+
+      - name: Test PHPUnit
+        working-directory: ./src
+        run: ./vendor/bin/phpunit
