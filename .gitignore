@@ -1,0 +1,9 @@
+/*
+
+!/.env.example
+!/docker-compose.yml
+!/README.md
+!/.gitignore
+
+!/src/
+!/docker/

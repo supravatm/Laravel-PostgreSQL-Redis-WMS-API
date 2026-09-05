@@ -1,0 +1,56 @@
+services:
+    # PHP-FPM Application
+    phpfpm:
+      build:
+        context: .
+        dockerfile: ./docker/app.dockerfile
+      working_dir: /var/www
+      ports:
+        - "8000:8000"
+      volumes:
+          - ./src:/var/www
+      depends_on:
+        postgres:
+          condition: service_healthy
+        redis:
+          condition: service_started
+      environment:
+        DB_CONNECTION: pgsql
+        DB_HOST: postgres
+        DB_PORT: 5432
+        DB_DATABASE: ${POSTGRES_DB}
+        DB_USERNAME: ${POSTGRES_USER}
+        DB_PASSWORD: ${POSTGRES_PASSWORD}
+
+        REDIS_HOST: redis
+        REDIS_PORT: ${REDIS_PORT}
+    # Database
+    postgres:
+      image: postgres:16
+      restart: unless-stopped
+      environment:
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+      ports:
+        - "${POSTGRES_PORT}:5432"
+
+      volumes:
+        - wms_postgres_data:/var/lib/postgresql/data
+
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+    redis:
+      image: redis:7-alpine
+      restart: unless-stopped
+      ports:
+        - "6379:6379"
+      volumes:
+        - wms_redis_data:/data
+volumes:
+    wms_postgres_data:
+    wms_redis_data:
