@@ -71,7 +71,7 @@ Start the application and use a REST API client such as Postman, Insomnia, Swagg
 ## API Documentation & Testing
 
 <p align="center">
-    <img align="center" src="https://raw.githubusercontent.com/supravatm/Laravel-PostgreSQL-Redis-WMS-API/main/public/api-docs-screen.png" alt="Preview" width="80%" />
+    <img align="center" src="https://raw.githubusercontent.com/supravatm/Laravel-PostgreSQL-Redis-WMS-API/main/src/public/api-docs-screen.png" alt="Preview" width="80%" />
 
 </p>
 </br>
