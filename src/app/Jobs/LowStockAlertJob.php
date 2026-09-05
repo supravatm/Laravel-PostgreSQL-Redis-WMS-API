@@ -31,14 +31,21 @@ class LowStockAlertJob implements ShouldQueue
             return;
         }
 
-        $threshold = $inventory->product->low_stock_threshold;
-        if ($inventory->quantity < $threshold) {
-            Log::warning('Low stock alert', [
-                'product_id' => $inventory->product_id,
-                'location_id' => $inventory->location_id,
-                'quantity' => $inventory->quantity,
-                'threshold' => $threshold,
-            ]);
+        /** @var \App\Models\Product|null $product */
+        $product = $inventory->product;
+
+        // Verify the relation model loaded successfully before reading fields
+        if ($product) {
+            $threshold = $product->low_stock_threshold;
+
+            if ($inventory->quantity < $threshold) {
+                Log::warning('Low stock alert', [
+                    'product_id' => $inventory->product_id,
+                    'location_id' => $inventory->location_id,
+                    'quantity' => $inventory->quantity,
+                    'threshold' => $threshold,
+                ]);
+            }
         }
     }
 }

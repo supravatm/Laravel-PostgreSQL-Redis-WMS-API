@@ -1,8 +1,13 @@
 name: Build and test
 
 on:
+  push:
+    branches:
+      - feature/git-action
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+      - develop
 
 jobs:
   build:
@@ -29,7 +34,7 @@ jobs:
           extensions: pdo_pgsql, pgsql
 
       - name: Copy .env
-        run: cp src/.env.test src/.env
+        run: cp src/.env.testing src/.env
 
       - name: Install app
         working-directory: ./src

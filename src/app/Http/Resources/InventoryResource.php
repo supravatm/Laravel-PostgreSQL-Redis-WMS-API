@@ -5,6 +5,9 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin \App\Models\Inventory
+ */
 class InventoryResource extends JsonResource
 {
     /**
@@ -14,6 +17,15 @@ class InventoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        /** @var \App\Models\Product|null $product */
+        $product = $this->product;
+
+        /** @var \App\Models\Location|null $location */
+        $location = $this->location;
+
+        /** @var \App\Models\Warehouse|null $warehouse */
+        $warehouse = $location?->warehouse;
+
         return [
             'id' => $this->id,
             'product_id' => $this->product_id,
@@ -21,23 +33,23 @@ class InventoryResource extends JsonResource
             'quantity' => $this->quantity,
 
             'product' => [
-                'id' => $this->product?->id,
-                'sku' => $this->product?->sku,
-                'name' => $this->product?->name,
-                'unit' => $this->product?->unit,
+                'id' => $product?->id,
+                'sku' => $product?->sku,
+                'name' => $product?->name,
+                'unit' => $product?->unit,
             ],
 
             'location' => [
-                'id' => $this->location?->id,
-                'code' => $this->location?->code,
-                'name' => $this->location?->name,
-                'warehouse_id' => $this->location?->warehouse_id,
+                'id' => $location?->id,
+                'code' => $location?->code,
+                'name' => $location?->name,
+                'warehouse_id' => $location?->warehouse_id,
             ],
 
             'warehouse' => [
-                'id' => $this->location?->warehouse?->id,
-                'code' => $this->location?->warehouse?->code,
-                'name' => $this->location?->warehouse?->name,
+                'id' => $warehouse?->id,
+                'code' => $warehouse?->code,
+                'name' => $warehouse?->name,
             ],
 
             'updated_at' => $this->updated_at?->toISOString(),
