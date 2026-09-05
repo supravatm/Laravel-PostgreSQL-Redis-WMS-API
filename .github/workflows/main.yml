@@ -1,9 +1,9 @@
 name: Build and test
 
 on:
-  push:
-    branches:
-      - feature/git-action
+  # push:
+  #   branches:
+  #     - feature/git-action
   pull_request:
     branches:
       - main
