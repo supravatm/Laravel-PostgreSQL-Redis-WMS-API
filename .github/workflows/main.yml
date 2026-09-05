@@ -8,7 +8,7 @@ on:
     branches:
       - main
       - develop
-      
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
           extensions: pdo_pgsql, pgsql
 
       - name: Copy .env
-        run: cp src/.env.test src/.env
+        run: cp src/.env.testing src/.env
 
       - name: Install app
         working-directory: ./src
