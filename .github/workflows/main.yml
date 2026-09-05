@@ -1,9 +1,14 @@
 name: Build and test
 
 on:
+  push:
+    branches:
+      - feature/git-action
   pull_request:
-    branches: [ main ]
-
+    branches:
+      - main
+      - develop
+      
 jobs:
   build:
     runs-on: ubuntu-latest
