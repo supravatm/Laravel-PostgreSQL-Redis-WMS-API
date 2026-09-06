@@ -38,9 +38,15 @@ jobs:
 
       - name: Install app
         working-directory: ./src
-        run: composer install
+        run: composer install --no-interaction --prefer-dist
+      
+      - name: Clear Laravel config
+        working-directory: ./src
+        env:
+          APP_ENV: testing
+        run: php artisan config:clear
 
-      - name: Run migrations
+      - name: Check DB configuration
         working-directory: ./src
         env:
           APP_ENV: testing
@@ -48,12 +54,25 @@ jobs:
           DB_PORT: ${{ vars.DB_PORT }}
           DB_DATABASE: ${{ vars.DB_DATABASE }}
           DB_USERNAME: ${{ vars.DB_USERNAME }}
+        run: |
+          echo "APP_ENV=$APP_ENV"
+          echo "DB_HOST=$DB_HOST"
+          echo "DB_PORT=$DB_PORT"
+          echo "DB_DATABASE=$DB_DATABASE"
+          echo "DB_USERNAME=$DB_USERNAME"
+      
+      - name: Run migrations
+        working-directory: ./src
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: pgsql
+          DB_HOST: ${{ vars.DB_HOST }}
+          DB_PORT: ${{ vars.DB_PORT }}
+          DB_DATABASE: ${{ vars.DB_DATABASE }}
+          DB_USERNAME: ${{ vars.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: php artisan migrate
       
-      - name: Clear Laravel config
-        working-directory: ./src
-        run: php artisan config:clear
 
       - name: Test PHPStan
         working-directory: ./src
