@@ -1,10 +1,10 @@
 name: Build and test
 
 on:
+  # push:
+  #   branches:
+  #     - feature/git-action
   push:
-    branches:
-      - feature/git-action
-  pull_request:
     branches:
       - main
       - develop
@@ -50,4 +50,6 @@ jobs:
 
       - name: Test PHPUnit
         working-directory: ./src
+        env:
+          DB_HOST: 127.0.0.1
         run: ./vendor/bin/phpunit
