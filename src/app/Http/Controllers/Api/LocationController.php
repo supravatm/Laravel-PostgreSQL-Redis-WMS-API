@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\LocationRequest;
 use App\Http\Resources\LocationResource;
 use App\Models\Location;
 use App\Models\Warehouse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {

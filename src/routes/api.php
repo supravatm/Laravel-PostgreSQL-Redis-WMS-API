@@ -1,15 +1,13 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Api\LocationController;
-use App\Http\Controllers\Api\WarehouseController;
 use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\InventoryOperationController;
+use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\StockMovementController;
-
+use App\Http\Controllers\Api\WarehouseController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
 

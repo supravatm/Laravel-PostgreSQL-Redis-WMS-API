@@ -24,6 +24,7 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         $product = $this->route('product');
+
         return [
             'sku' => [
                 'required',

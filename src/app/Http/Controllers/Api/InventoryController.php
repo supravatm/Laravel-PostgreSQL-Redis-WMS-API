@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InventoryIndexRequest;
-use App\Http\Resources\InventoryResource;
 use App\Models\Inventory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
@@ -17,13 +16,13 @@ class InventoryController extends Controller
 
         $version = Cache::rememberForever(
             'inventory:version',
-            fn() => 1
+            fn () => 1
         );
 
         $page = $request->integer('page', 1);
         $perPage = $request->integer('per_page', 10);
 
-        $cacheKey = 'inventory:v' . $version . ':' . md5(
+        $cacheKey = 'inventory:v'.$version.':'.md5(
             json_encode([
                 'filters' => $filters,
                 'page' => $page,
@@ -43,21 +42,17 @@ class InventoryController extends Controller
                     ])
                     ->when(
                         $filters['product_id'] ?? null,
-                        fn($query, $productId) =>
-                        $query->where('product_id', $productId)
+                        fn ($query, $productId) => $query->where('product_id', $productId)
                     )
                     ->when(
                         $filters['location_id'] ?? null,
-                        fn($query, $locationId) =>
-                        $query->where('location_id', $locationId)
+                        fn ($query, $locationId) => $query->where('location_id', $locationId)
                     )
                     ->when(
                         $filters['warehouse_id'] ?? null,
-                        fn($query, $warehouseId) =>
-                        $query->whereHas(
+                        fn ($query, $warehouseId) => $query->whereHas(
                             'location',
-                            fn($query) =>
-                            $query->where(
+                            fn ($query) => $query->where(
                                 'warehouse_id',
                                 $warehouseId
                             )
@@ -73,7 +68,7 @@ class InventoryController extends Controller
 
                 return [
                     'items' => collect($paginator->items())
-                        ->map(fn($inventory) => $inventory->toArray())
+                        ->map(fn ($inventory) => $inventory->toArray())
                         ->values()
                         ->all(),
 

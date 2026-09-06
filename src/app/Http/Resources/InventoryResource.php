@@ -2,11 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Inventory;
+use App\Models\Location;
+use App\Models\Product;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin \App\Models\Inventory
+ * @mixin Inventory
  */
 class InventoryResource extends JsonResource
 {
@@ -17,13 +21,13 @@ class InventoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var \App\Models\Product|null $product */
+        /** @var Product|null $product */
         $product = $this->product;
 
-        /** @var \App\Models\Location|null $location */
+        /** @var Location|null $location */
         $location = $this->location;
 
-        /** @var \App\Models\Warehouse|null $warehouse */
+        /** @var Warehouse|null $warehouse */
         $warehouse = $location?->warehouse;
 
         return [

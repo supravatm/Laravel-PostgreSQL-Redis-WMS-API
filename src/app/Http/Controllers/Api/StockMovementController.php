@@ -22,8 +22,7 @@ class StockMovementController extends Controller
             ])
             ->when(
                 $filters['product_id'] ?? null,
-                fn($query, $value) =>
-                $query->where('product_id', $value)
+                fn ($query, $value) => $query->where('product_id', $value)
             )
             ->when(
                 $filters['warehouse_id'] ?? null,
@@ -32,16 +31,14 @@ class StockMovementController extends Controller
                         $query
                             ->whereHas(
                                 'sourceLocation',
-                                fn($query) =>
-                                $query->where(
+                                fn ($query) => $query->where(
                                     'warehouse_id',
                                     $warehouseId
                                 )
                             )
                             ->orWhereHas(
                                 'destinationLocation',
-                                fn($query) =>
-                                $query->where(
+                                fn ($query) => $query->where(
                                     'warehouse_id',
                                     $warehouseId
                                 )
@@ -51,18 +48,15 @@ class StockMovementController extends Controller
             )
             ->when(
                 $filters['movement_type'] ?? null,
-                fn($query, $value) =>
-                $query->where('movement_type', $value)
+                fn ($query, $value) => $query->where('movement_type', $value)
             )
             ->when(
                 $filters['from'] ?? null,
-                fn($query, $value) =>
-                $query->whereDate('created_at', '>=', $value)
+                fn ($query, $value) => $query->whereDate('created_at', '>=', $value)
             )
             ->when(
                 $filters['to'] ?? null,
-                fn($query, $value) =>
-                $query->whereDate('created_at', '<=', $value)
+                fn ($query, $value) => $query->whereDate('created_at', '<=', $value)
             )
             ->latest()
             ->paginate(
