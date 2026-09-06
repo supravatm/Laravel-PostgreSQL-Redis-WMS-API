@@ -41,6 +41,14 @@ jobs:
         working-directory: ./src
         run: composer install --no-interaction --prefer-dist
       
+      - name: Test Laravel Pint
+        working-directory: ./src
+        run: ./vendor/bin/pint --test
+      
+      - name: Test PHPStan
+        working-directory: ./src
+        run: ./vendor/bin/phpstan analyse
+      
       - name: Clear Laravel config
         working-directory: ./src
         env:
@@ -60,9 +68,7 @@ jobs:
         run: php artisan migrate
       
 
-      - name: Test PHPStan
-        working-directory: ./src
-        run: ./vendor/bin/phpstan analyse
+      
 
       - name: Test PHPUnit
         working-directory: ./src

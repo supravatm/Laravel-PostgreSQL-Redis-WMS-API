@@ -30,7 +30,7 @@ class InventoryService
                 ->lockForUpdate()
                 ->findOrFail($productId);
 
-            if (!$product->isActive()) {
+            if (! $product->isActive()) {
                 throw ValidationException::withMessages([
                     'product_id' => 'Inactive products cannot receive stock.',
                 ]);
@@ -42,7 +42,7 @@ class InventoryService
                 ->lockForUpdate()
                 ->first();
 
-            if (!$inventory) {
+            if (! $inventory) {
                 $inventory = Inventory::create([
                     'product_id' => $productId,
                     'location_id' => $locationId,
@@ -95,7 +95,7 @@ class InventoryService
                 ->lockForUpdate()
                 ->findOrFail($productId);
 
-            if (!$product->isActive()) {
+            if (! $product->isActive()) {
                 throw ValidationException::withMessages([
                     'product_id' => 'Inactive products cannot be transferred.',
                 ]);
@@ -123,7 +123,7 @@ class InventoryService
 
             $source = $inventories->get($sourceLocationId);
 
-            if (!$source || $source->quantity < $quantity) {
+            if (! $source || $source->quantity < $quantity) {
                 throw ValidationException::withMessages([
                     'quantity' => 'Insufficient inventory.',
                 ]);
@@ -131,7 +131,7 @@ class InventoryService
 
             $destination = $inventories->get($destinationLocationId);
 
-            if (!$destination) {
+            if (! $destination) {
                 $destination = Inventory::create([
                     'product_id' => $productId,
                     'location_id' => $destinationLocationId,
@@ -188,7 +188,7 @@ class InventoryService
                 ->lockForUpdate()
                 ->findOrFail($productId);
 
-            if (!$product->isActive()) {
+            if (! $product->isActive()) {
                 throw ValidationException::withMessages([
                     'product_id' => 'Inactive products cannot be dispatched.',
                 ]);
@@ -200,7 +200,7 @@ class InventoryService
                 ->lockForUpdate()
                 ->first();
 
-            if (!$inventory || $inventory->quantity < $quantity) {
+            if (! $inventory || $inventory->quantity < $quantity) {
                 throw ValidationException::withMessages([
                     'quantity' => 'Insufficient inventory.',
                 ]);

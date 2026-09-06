@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Inventory;
+use App\Models\Product;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Log;
@@ -27,11 +28,11 @@ class LowStockAlertJob implements ShouldQueue
         $inventory = Inventory::with('product', 'location')
             ->find($this->inventoryId);
 
-        if (!$inventory) {
+        if (! $inventory) {
             return;
         }
 
-        /** @var \App\Models\Product|null $product */
+        /** @var Product|null $product */
         $product = $inventory->product;
 
         // Verify the relation model loaded successfully before reading fields
