@@ -45,15 +45,15 @@ jobs:
         working-directory: ./src
         run: ./vendor/bin/pint --test
       
-      - name: Test PHPStan
-        working-directory: ./src
-        run: ./vendor/bin/phpstan analyse
-      
       - name: Clear Laravel config
         working-directory: ./src
         env:
           APP_ENV: testing
         run: php artisan config:clear
+
+      - name: Test PHPStan
+        working-directory: ./src
+        run: ./vendor/bin/phpstan analyse
 
       - name: Run migrations
         working-directory: ./src
