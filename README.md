@@ -27,13 +27,15 @@ This project implements a small Warehouse Management System focused on inventory
 
 ## Requirements
 
-* Backend: Laravel (PHP) (Version: 13.30.1)
-* Database: PostgreSQL (Version: 16.15)
-* Cache/Queue: Redis(Version: 7.4.11)
-* API: RESTful JSON API
-* Authentication: Sanctum
-* Containerization: Docker Desktop
-* Testing: Unit and API/integration tests
+- **PHP:** 8.4+
+- **Laravel:** 13
+- **PostgreSQL:** 16
+- **Redis:** 7
+- **API:** RESTful JSON API
+- **Authentication:** Laravel Sanctum
+- **Containerization:** Docker / Docker Compose
+- **Testing:** PHPUnit (Unit and Feature/API tests)
+
 
 ## Installation & Configuration
 
@@ -41,17 +43,15 @@ Clone the repository, install the backend dependencies, configure the environmen
 
 | Commands                                                                      | Description                                     |
 | ----------------------------------------------------------------------------- | ----------------------------------------------- |
-| `git clone git@github.com:supravatm/Laravel-PostgreSQL-Redis-WMS-API.git wms` | Clone the WMS repository                        |
+| `git clone <repository-url> wms` | Clone the WMS repository                   |
 | `cp .env.example .env`                                                        | Create the environment configuration file       |
 | `docker compose config`                                                       | Validate the Docker Compose configuration       |
 | `docker compose up -d --build`                                                | Build and start Docker containers               |
 | `docker compose up -d`                                                        | Start Docker containers in detached mode        |
 | `docker compose exec phpfpm bash`                                             | Open a shell inside the PHP container           |
-| `# composer create-project laravel/laravel . --prefer-dist`                   | Create the Laravel application                  |
 | `composer install`                                                            | Install project dependencies                    |
 | `php artisan key:generate`                                                    | Generate the Laravel application encryption key |
 | `php artisan migrate`                                                         | Run database migrations                         |
-| `# composer require laravel/sanctum`                                          | Install Laravel Sanctum authentication          |
 | `php artisan test --filter=ProductTest`                                       | Run product-related tests                       |
 | `php artisan test --filter=WarehouseLocationTest`                             | Run warehouse location tests                    |
 | `php artisan test --filter=InventoryReadTest`                                 | Run inventory read tests                        |
@@ -61,7 +61,7 @@ Clone the repository, install the backend dependencies, configure the environmen
 | `tail -f storage/logs/laravel.log`                                            | Monitor Laravel application logs                |
 | `docker compose exec postgres psql -U wms -d wms`                             | Connect to the PostgreSQL database              |
 | `\dt`                                                                         | List all PostgreSQL database tables             |
-| `php artisan serve`                                                           | Run Laravel locally                             |
+| `php artisan serve --host=0.0.0.0 --port=8000`                                | Run Laravel locally                             |
 | `docker compose down`                                                         | Stop and remove Docker containers               |
 
 
@@ -81,15 +81,29 @@ Start the application and use a REST API client such as Postman, Insomnia, Swagg
 Complete REST API Documentation can be found <a href="https://documenter.getpostman.com/view/497605/2sBYAvwWcG" target="_blank" rel="noopener noreferrer">here</a>
 </p>
 
-### Unit Tests
+## Unit Tests
+
+Unit tests cover core business logic, including:
 
 * Inventory quantity calculations
 * Stock validation
 * Low-stock threshold logic
 
+Tests are located in `src/tests/`. GitHub Actions CI runs Laravel Pint, PHPStan, migrations, and PHPUnit on pushes to `main` and `develop`.
+
 ## Contributing
 
-Contributions should maintain the project's architectural principles, validation standards, transaction safety, test coverage, and code quality.
+Contributors and anyone modifying the repository should maintain the project's architectural principles, validation standards, transaction safety, test coverage, and code quality.
+
+Before pushing changes, run the following checks from the `src` directory:
+
+```bash
+./vendor/bin/pint --test
+./vendor/bin/phpstan analyse
+php artisan test
+```
+
+All checks should pass before pushing changes. GitHub Actions CI automatically runs Pint, PHPStan, migrations, and PHPUnit on pushes to `main` and `develop`.
 
 ## License
 
