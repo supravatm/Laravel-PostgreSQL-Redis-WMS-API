@@ -17,9 +17,9 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_DB: wms_test
-          POSTGRES_USER: wms
-          POSTGRES_PASSWORD: wms
+          POSTGRES_DB: ${{ vars.DB_DATABASE }}
+          POSTGRES_USER: ${{ vars.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
           - 5432:5432
 
@@ -44,7 +44,11 @@ jobs:
         working-directory: ./src
         env:
           APP_ENV: testing
-          DB_HOST: 127.0.0.1
+          DB_HOST: ${{ vars.DB_HOST }}
+          DB_PORT: ${{ vars.DB_PORT }}
+          DB_DATABASE: ${{ vars.DB_DATABASE }}
+          DB_USERNAME: ${{ vars.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: php artisan migrate
       
       - name: Clear Laravel config
@@ -58,5 +62,9 @@ jobs:
       - name: Test PHPUnit
         working-directory: ./src
         env:
-          DB_HOST: 127.0.0.1
+          DB_HOST: ${{ vars.DB_HOST }}
+          DB_PORT: ${{ vars.DB_PORT }}
+          DB_DATABASE: ${{ vars.DB_DATABASE }}
+          DB_USERNAME: ${{ vars.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: ./vendor/bin/phpunit
