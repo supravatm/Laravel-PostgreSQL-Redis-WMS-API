@@ -45,16 +45,16 @@ jobs:
         run: php artisan migrate
       
       - name: Clear Laravel config
-          working-directory: ./src
-          run: php artisan config:clear
+        working-directory: ./src
+        run: php artisan config:clear
 
       - name: Check testing database config
-          working-directory: ./src
-          env:
-            DB_HOST: 127.0.0.1
-          run: |
-            php artisan config:clear
-            php artisan tinker --env=testing --execute="dump(getenv('DB_HOST')); dump(env('DB_HOST')); dump(config('database.connections.pgsql.host'));"
+        working-directory: ./src
+        env:
+          DB_HOST: 127.0.0.1
+        run: |
+          php artisan config:clear
+          php artisan tinker --env=testing --execute="dump(getenv('DB_HOST')); dump(env('DB_HOST')); dump(config('database.connections.pgsql.host'));"
       
       - name: Test PHPStan
         working-directory: ./src
