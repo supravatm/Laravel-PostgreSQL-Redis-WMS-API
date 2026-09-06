@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DispatchStockRequest;
 use App\Http\Requests\ReceiveStockRequest;
 use App\Http\Requests\TransferStockRequest;
-use App\Http\Requests\DispatchStockRequest;
 use App\Http\Resources\InventoryResource;
 use App\Services\InventoryService;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +15,7 @@ class InventoryOperationController extends Controller
     public function __construct(
         private readonly InventoryService $inventoryService
     ) {
-        // 
+        //
     }
 
     public function receive(
