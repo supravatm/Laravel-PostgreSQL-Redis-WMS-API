@@ -4,7 +4,7 @@ on:
   # push:
   #   branches:
   #     - feature/git-action
-  pull_request:
+  push:
     branches:
       - main
       - develop
